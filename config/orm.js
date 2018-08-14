@@ -1,15 +1,34 @@
 const connection = require("./connection");
 
 function selectAll() {
-    connection.query('SELECT * FROM burgers', function (error, results, fields) {
-        if (error) throw error;
-        console.log('The solution is: ', results[0].solution);
+    return new Promise(function (resolve, reject) {
+        connection.query('SELECT * FROM burgers', function (error, results) {
+            if (error) reject(error);
+            results.map(burger => {
+                burger.devoured = burger.devoured === 1
+            })
+            resolve(results)
+        })
     })
 }
 
-function insertOne() {}
+function insertOne(burgerName) {
+    return new Promise(function (resolve, reject) {
+        connection.query(`INSERT INTO burgers VALUES (NULL, "${burgerName}", FALSE)`, function (error, results) {
+            if (error) reject(error);
+            resolve()
+        })
+    })
+}
 
-function updateOne() {}
+function updateOne(burgerName) {
+    return new Promise(function (resolve, reject) {
+        connection.query(`UPDATE burgers SET devoured = TRUE WHERE burgerName = "${burgerName}"`, function (error, results) {
+            if (error) reject(error);
+            resolve()
+        })
+    })
+}
 
 module.exports = {
     selectAll,
