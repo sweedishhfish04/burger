@@ -11,7 +11,7 @@ function getBurgers(req, res, next) {
 }
 
 function addBurger(req, res, next) {
-    orm.insertOne(req.pramas.burgerName).then(function () {
+    orm.insertOne(req.params.burgerName).then(function () {
         console.log("Inserted Burger Name")
         res.send()
     }).catch(function (err) {
@@ -21,7 +21,13 @@ function addBurger(req, res, next) {
 }
 
 function eatBurger(req, res, next) {
-
+    orm.updateOne(req.params.burgerName).then(function () {
+        console.log("Updated")
+        res.send()
+    }).catch(function (err) {
+        console.error(err.message)
+        res.status(500).send()
+    })
 }
 
 module.exports = {
