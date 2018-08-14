@@ -1,4 +1,8 @@
+const exphbs  = require('express-handlebars')
+
 const express = require("express");
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 const bodyParser = require("body-parser");
 const router = require("./controllers/burgers_controller")
 
